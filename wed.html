@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="bn"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zamindar Heritage | Rohan &amp; Priyadarshini</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Noto+Serif+Bengali:wght@100..900&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            overflow-x: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+
+        /* Decorative Borders */
+        .alpana-border {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px solid rgba(233, 195, 73, 0.2);
+            pointer-events: none;
+            z-index: 60;
+        }
+
+        /* Particle Systems */
+        .petal {
+            position: fixed;
+            background: #e9c349;
+            border-radius: 100% 0 100% 0;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 45;
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2);
+        }
+
+        .firefly {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: #e9c349;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 45;
+            filter: blur(1px);
+            box-shadow: 0 0 10px #e9c349;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(19, 19, 19, 0.4);
+            border: 1px solid rgba(233, 195, 73, 0.3);
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 15px rgba(233, 195, 73, 0.5);
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Parallax Background */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #e9c349;
+            z-index: 150;
+            box-shadow: 0 0 10px #e9c349;
+        }
+
+        /* Custom Shimmer Button */
+        .shimmer-button {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        .shimmer-button:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+
+        /* Silk Texture Overlay */
+        .silk-texture-bg {
+            position: relative;
+        }
+        .silk-texture-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfxh_EN4fIHBNf7mBxR7aL-S8h6o2piEtfZgiSl-YqtPlsw7egQWytGoDngeOv9REEQKgArc7HLjY0c6UreEZgJcbaKnmA0W40RG-Nxp4oAq2q8psNuWaMySCiW3lGo7Zqu1GIWOLAmzTf7eNe7y6C_pTfGPDNxCfWB3Q66epnlXMRCe1IsUOhEA-8Ib_m5w4vNr_0fl6SAuA3DvwOKSPfD--BQd_9wXdubOSCOpBe4sJMueyJyM_-OAVrGRMG60v5iWkAvhJ6Z8s');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .parallax-bg, .petal, .firefly {
+                transition: none !important;
+                animation: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ffb4aa",
+                        "secondary": "#e9c349",
+                        "tertiary": "#c7c7ba",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "primary-container": "#4a0404",
+                        "secondary-container": "#af8d11",
+                        "on-secondary-fixed": "#241a00",
+                        "tertiary-fixed-dim": "#c7c7ba",
+                        "surface-container-lowest": "#0e0e0e"
+                    },
+                    "fontFamily": {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Noto Serif", "serif"],
+                        "bengali": ["Noto Serif Bengali", "serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="selection:bg-secondary selection:text-on-secondary-fixed">
+<div id="scroll-progress"></div>
+<div class="alpana-border hidden md:block"></div>
+<!-- Persistent Navigation (SideBar) -->
+<nav class="h-full w-80 fixed left-0 z-[100] border-r border-secondary/30 bg-surface/80 backdrop-blur-xl flex flex-col p-8 hidden md:flex transition-transform duration-500">
+<div class="mb-12">
+<div class="w-16 h-16 rounded-full border border-secondary p-1 mb-4 overflow-hidden">
+<img alt="Royal Palace Seal" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEPmlQdPRV2Iylt48Z1CA3mcEYqYYexlpkWrJcDzMofZOFt_k7SnQsbWdt_DuYgpytq8Z0Vmw3l2439tDLLu7TLCmaskSFmBUGs2XTf15vrl94CIyIPBKURmptiTKo0gpd7sSkksaer5fnUTVRH9UbJFT727Vj4lbV0UOfWZyRguzPH7q27jw9NZmsA4VicxgmGM2zadu5P7-3tvLaTiOg1DJ5Hs2lw1I8iD0ih0r-9ZImv96CqNLEX_k56-kondumqlv_Q3EHgPI"/>
+</div>
+<h1 class="font-headline text-secondary text-4xl mb-1">Shuvokkho</h1>
+<p class="font-body text-tertiary text-sm">The Grand Royal Union</p>
+</div>
+<div class="flex flex-col gap-8">
+<a class="text-secondary font-bold flex items-center gap-3 text-lg hover:translate-x-2 transition-transform" href="#hero">
+<span class="material-symbols-outlined">home</span> Home
+        </a>
+<a class="text-tertiary hover:text-secondary flex items-center gap-3 text-lg hover:translate-x-2 transition-transform" href="#story">
+<span class="material-symbols-outlined">menu_book</span> Our Story
+        </a>
+<a class="text-tertiary hover:text-secondary flex items-center gap-3 text-lg hover:translate-x-2 transition-transform" href="#events">
+<span class="material-symbols-outlined">celebration</span> The Ceremony
+        </a>
+<a class="text-tertiary hover:text-secondary flex items-center gap-3 text-lg hover:translate-x-2 transition-transform" href="#rsvp">
+<span class="material-symbols-outlined">edit_notifications</span> RSVP
+        </a>
+</div>
+<a class="mt-auto block text-center shimmer-button bg-secondary text-on-secondary-fixed py-4 rounded-lg font-bold tracking-widest uppercase transition-all" href="#rsvp">
+        RSVP Now
+    </a>
+</nav>
+<!-- Main Content Container -->
+<main class="md:pl-80 relative">
+<!-- Persistent Particles Container -->
+<div class="fixed inset-0 pointer-events-none z-[45]" id="particles-container"></div>
+<!-- 1. HERO SECTION (SCREEN_3) -->
+<section class="relative min-h-screen w-full flex items-center justify-center overflow-hidden" id="hero">
+<div class="parallax-bg" style="background: linear-gradient(rgba(19,19,19,0.6), rgba(19,19,19,0.9)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9noEW6SBxLRwtcWPXygP-ssKKv1XPAIuq17piWMgVLB2EgQFwtLhZEDxMsufdmI2Era9zsB9iNaBKb2Ho1H9dVc0LqFmhn2oVKoJ4b8NZJMpcuCAXin-5zaksx_HZds5XC-C0UMI6OKBKgKUcIfiJcgDzIER39QSOaE9ss7BAkNssylIXFITroshlOxNcTVfkmog4xbJlFp3WA87e7YThcjjNFpGCpGuAvfqKtlOXAWA0PlwXS8bCuYabLSG4JZjbdnUWIKUP1Ls'); background-size: cover; background-position: center;"></div>
+<div class="relative z-10 text-center px-6 reveal">
+<div class="max-w-3xl glass-card p-12 md:p-24 rounded-full border-secondary/30">
+<img alt="Bengali Wedding Crest" class="w-32 h-32 mx-auto mb-8 drop-shadow-[0_0_15px_rgba(233,195,73,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArSGw2TvX9ShVfflBcRyGwFlCkcoq4RngXUSdAVPhmwINXOzEf49WvVsXyiQuKaCGPwqf7Az1gjS7ZvpYbAnqEVlNRkr-UpECw2bBb25flpl95TTBqQLEMaOIOAa9QVL79bA971jS00LJ_t2XZygq_UbV7572bk_R2V1ngXzLcdzkgCO2Ivz3s0AVAZhPDOSHfGhdu3vgTFvL5HaCZMwx1RkPpkaGfViEHCkY5YEmtwo9ALRQRO6EBwPPoQ1HTwkt9HVnArSQJP8U"/>
+<h2 class="font-headline text-secondary text-5xl md:text-6xl gold-glow mb-6 tracking-wide">শুভ বিবাহ</h2>
+<div class="flex items-center justify-center gap-4 md:gap-8 mb-12">
+<span class="font-headline text-2xl md:text-3xl italic">Rohan</span>
+<span class="text-secondary font-headline text-4xl">&amp;</span>
+<span class="font-headline text-2xl md:text-3xl italic">Priyadarshini</span>
+</div>
+<p class="font-body text-lg text-tertiary max-w-lg mx-auto leading-relaxed mb-12">
+                    Cordially invite you to witness the eternal union of hearts within the hallowed halls of our ancestral estate.
+                </p>
+<div class="flex flex-col items-center gap-12">
+<a class="shimmer-button bg-secondary text-on-secondary-fixed px-12 py-4 rounded-full font-bold tracking-widest uppercase text-sm hover:scale-105 transition-all shadow-[0_10px_20px_-10px_rgba(233,195,73,0.5)]" href="#story">
+                        Explore the Celebration
+                    </a>
+<div class="animate-bounce flex flex-col items-center gap-2">
+<span class="text-xs font-bold tracking-widest text-secondary uppercase">Scroll to Begin</span>
+<span class="material-symbols-outlined text-secondary text-4xl">keyboard_double_arrow_down</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. OUR STORY (SCREEN_8) -->
+<section class="relative min-h-screen py-32 silk-texture-bg flex flex-col items-center justify-center" id="story">
+<div class="parallax-bg" style="background: radial-gradient(circle at 50% 50%, #4a0404 0%, #131313 100%);"></div>
+<div class="relative z-10 w-full reveal">
+<div class="text-center mb-24">
+<h2 class="font-bengali text-secondary text-2xl tracking-[0.5em] mb-4">একটি গল্প</h2>
+<h1 class="font-headline text-secondary text-5xl mb-8">Ekti Golpo</h1>
+<div class="w-24 h-[1px] bg-secondary mx-auto mb-8"></div>
+<p class="font-body text-lg max-w-2xl mx-auto text-on-surface/80 italic">
+                    A journey through time, from the bustling streets of College Street to the grand courtyards of the North.
+                </p>
+</div>
+<!-- Horizontal Timeline Container -->
+<div class="overflow-x-auto hide-scrollbar px-10 md:px-20 pb-12 cursor-grab active:cursor-grabbing">
+<div class="inline-flex gap-12 items-center">
+<!-- Milestone 1 -->
+<div class="w-[350px] md:w-[450px] shrink-0">
+<div class="glass-card p-4 relative group">
+<img alt="First Meeting" class="w-full h-80 md:h-[500px] object-cover mb-6 grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9LTIlfv-Pc2ySsz09P8xCFPsL-H2Hv6FK2pyIQmgYhxPcJZJmfx_BLSaZQCpjPLHemIwK7PwoLqp-sFQgHJ5v5KaYtj2FY1oGkX-ODKJ4lpJ9ywfdJHseUaKq67NdtM4w3wCbc6BYJ9jQSYiL0MmgvSmE_JuK6nc3Vb0JIwCfWfesrzreJPu53fpTQR8_NoQvCgI9W60n2vZnOCxTxxxaTQC65odhgzoawnmmjMiEvvdX-Y7Tba-sil2bwebp594Hv1xyrN2X7eI"/>
+<span class="font-bold text-secondary block mb-2 text-xs uppercase tracking-widest">OCTOBER 2018</span>
+<h3 class="font-headline text-2xl text-secondary mb-4">The Coffee House Encounter</h3>
+<p class="font-body text-sm text-on-surface/70">Amidst the smell of roasted beans and common verses.</p>
+</div>
+</div>
+<div class="w-24 h-[1px] bg-secondary/30"></div>
+<!-- Milestone 2 -->
+<div class="w-[350px] md:w-[450px] shrink-0 mt-20">
+<div class="glass-card p-4 relative group">
+<img alt="Friendship" class="w-full h-80 md:h-[500px] object-cover mb-6 grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1Z2E9z4Fxzbtg9z16Q0omShyWGWuUNSeO_guIrTjEJ97oKhCjJ3vo8XlDHDemOqKp6SEkAZ6ye6Dt_oQ09MTzaTS1ZctmMra9PTO5NQg0lRsUj-yvH5mBZZdayMsbRgVgT7xFZNepEgJt23VicHteS6fi4WpUdThosh51NXZbRZ6cfejrhqEGNPhHfRelJ68iehblmHnzrVOQg_pucaQZ1W6zfYJayvLZdd0jBToa3-ls4L7kjFEl0w07b1I5sgfBxEIQYOwTUoQ"/>
+<span class="font-bold text-secondary block mb-2 text-xs uppercase tracking-widest">WINTER 2019</span>
+<h3 class="font-headline text-2xl text-secondary mb-4">Verses &amp; Tram Rides</h3>
+<p class="font-body text-sm text-on-surface/70">Friendship blossomed into something eternal.</p>
+</div>
+</div>
+<div class="w-24 h-[1px] bg-secondary/30"></div>
+<!-- Milestone 3 -->
+<div class="w-[350px] md:w-[450px] shrink-0">
+<div class="glass-card p-4 relative group">
+<img alt="Proposal" class="w-full h-80 md:h-[500px] object-cover mb-6 grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0ZYyZBqCPxFn0HOlOwYiP2SpfWIgStYcGC7kacBUCITOKvQKmOH93GE3SICQcqGu23K7yTKFeuJ1lSB2C4Prln-yrvfhslm0B_GL_KAbwIwS6AG-6eeGqk0tCyRu8kYtPCCPRYqgm7kJUWAg9vRgq92ZXlY2q9pRI45Fbh8aGq0nPOZ4OmPtdRAke1Mxrd2FnU9QCeJHNlhao2tN9Z33bFc1inG2VWM7VYA1akPqHdO9D4wkRkvaRhTZxJs7caDqTz2SluXZRywA"/>
+<span class="font-bold text-secondary block mb-2 text-xs uppercase tracking-widest">VALENTINE'S 2021</span>
+<h3 class="font-headline text-2xl text-secondary mb-4">Ghatside Promises</h3>
+<p class="font-body text-sm text-on-surface/70">Under the grand pillars with the Ganges as witness.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. WEDDING EVENTS (SCREEN_9) -->
+<section class="relative min-h-screen py-32 px-6 md:px-12 flex flex-col items-center" id="events">
+<div class="parallax-bg" style="background: linear-gradient(rgba(19,19,19,0.85), rgba(19,19,19,0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXTe53IGHhQgiufEuk874DOKuBMH6t8VzRinp1WdgLluKNDoaalG89UEGQ0FXMyhYMpIVacHo9nuhvQUtlurvKvS-mD1GfaHuklFeQ_VXDlqQ9P61PhyPYjylKqGPIv_uYiYgle8HgqAlgpJDe5j5hBo5ASxe308dbxPQfIk68hiYj5by9rkc2LNNDNm1uyt5xMjv5RGHjg_bBHQlOglCURCao86hQzRc8aEAULeZzBjxQ4s4cKSsP_g-zgrx3rckfQB_QJTZEj3w'); background-size: cover; background-attachment: fixed;"></div>
+<div class="relative z-10 w-full max-w-6xl reveal">
+<div class="text-center mb-16 space-y-4">
+<span class="font-bold text-secondary tracking-[0.3em] text-xs">THE CELEBRATION</span>
+<h2 class="font-headline text-secondary text-5xl">Wedding Events</h2>
+<p class="font-body text-lg text-tertiary italic max-w-2xl mx-auto">Sacred ceremonies at our ancestral estate.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Aiburobhat -->
+<div class="glass-card p-8 rounded-xl silk-texture-bg border-secondary/30 hover:border-secondary transition-all">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-xs font-bold text-secondary border border-secondary/40 px-3 py-1 mb-4 inline-block">FAREWELL MEAL</span>
+<h3 class="font-headline text-3xl text-secondary">Aiburobhat</h3>
+</div>
+<span class="material-symbols-outlined text-4xl text-secondary opacity-50">restaurant</span>
+</div>
+<div class="space-y-3 mb-8 text-tertiary">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">calendar_today</span> Thursday, 14th Nov</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">location_on</span> Royal Dining Hall</p>
+</div>
+</div>
+<!-- Gaye Holud -->
+<div class="glass-card p-8 rounded-xl border-secondary/30 hover:border-secondary transition-all">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-xs font-bold text-secondary border border-secondary/40 px-3 py-1 mb-4 inline-block">TURMERIC RITUAL</span>
+<h3 class="font-headline text-3xl text-secondary">Gaye Holud</h3>
+</div>
+<span class="material-symbols-outlined text-4xl text-secondary opacity-50">spa</span>
+</div>
+<div class="space-y-3 mb-8 text-tertiary">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">calendar_today</span> Friday, 15th Nov | 9 AM</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-sm">location_on</span> Sunlit Courtyard</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. RSVP (SCREEN_10) -->
+<section class="relative min-h-screen py-32 px-6 flex flex-col items-center justify-center" id="rsvp">
+<div class="parallax-bg" style="background: #131313;"></div>
+<div class="relative z-10 w-full max-w-2xl reveal">
+<div class="text-center mb-12">
+<img alt="Seal" class="w-24 h-24 mx-auto mb-6 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEPmlQdPRV2Iylt48Z1CA3mcEYqYYexlpkWrJcDzMofZOFt_k7SnQsbWdt_DuYgpytq8Z0Vmw3l2439tDLLu7TLCmaskSFmBUGs2XTf15vrl94CIyIPBKURmptiTKo0gpd7sSkksaer5fnUTVRH9UbJFT727Vj4lbV0UOfWZyRguzPH7q27jw9NZmsA4VicxgmGM2zadu5P7-3tvLaTiOg1DJ5Hs2lw1I8iD0ih0r-9ZImv96CqNLEX_k56-kondumqlv_Q3EHgPI"/>
+<h1 class="font-headline text-secondary text-5xl mb-2">Confirm Your Presence</h1>
+<p class="font-bold text-tertiary tracking-[0.2em] text-xs uppercase">The Grand Royal Union</p>
+</div>
+<form action="mailto:souptikpurkait9933@gmail.com" class="glass-card rounded-2xl p-8 md:p-12 space-y-8 shadow-2xl" enctype="text/plain" method="post">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-xs font-bold text-secondary/80 uppercase">Guest Name</label>
+<input class="w-full bg-transparent border-b border-secondary/30 focus:border-secondary outline-none py-2 text-lg transition-colors placeholder:text-secondary/20" name="Guest Name" placeholder="Maharaja/Maharani..." required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-secondary/80 uppercase">Number of Guests</label>
+<select class="w-full bg-transparent border-b border-secondary/30 focus:border-secondary outline-none py-2 text-lg cursor-pointer" name="Number of Guests">
+<option class="bg-surface" value="1">Solo Guest</option>
+<option class="bg-surface" value="2">Couple</option>
+<option class="bg-surface" value="5">Family/Party</option>
+</select>
+</div>
+</div>
+<div class="space-y-4">
+<label class="text-xs font-bold text-secondary/80 block text-center uppercase">Attendance</label>
+<div class="flex justify-center gap-6">
+<label class="cursor-pointer">
+<input checked="" class="hidden peer" name="Attendance" type="radio" value="Joyfully Accept"/>
+<div class="px-6 py-2 rounded-full border border-secondary/30 text-tertiary peer-checked:bg-secondary peer-checked:text-on-secondary-fixed transition-all text-sm font-bold">Joyfully Accept</div>
+</label>
+<label class="cursor-pointer">
+<input class="hidden peer" name="Attendance" type="radio" value="Regretfully Decline"/>
+<div class="px-6 py-2 rounded-full border border-secondary/30 text-tertiary peer-checked:bg-secondary peer-checked:text-on-secondary-fixed transition-all text-sm font-bold">Regretfully Decline</div>
+</label>
+</div>
+</div>
+<button class="w-full py-5 bg-secondary text-on-secondary-fixed font-headline text-2xl rounded-xl gold-glow active:scale-95 transition-all shimmer-button" type="submit">
+                    Send RSVP
+                </button>
+</form>
+<footer class="mt-16 text-center text-tertiary/40 text-xs font-bold tracking-widest uppercase">
+                © 2024 Shuvokkho Royal Ceremonies. Crafted with Heritage.
+            </footer>
+</div>
+</section>
+</main>
+<!-- Bottom Nav (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center p-4 bg-surface/60 backdrop-blur-md border-t border-secondary/20 md:hidden">
+<a class="flex flex-col items-center text-secondary" href="#hero">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center text-tertiary" href="#story">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-bold uppercase mt-1">Story</span>
+</a>
+<a class="flex flex-col items-center text-tertiary" href="#rsvp">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-[10px] font-bold uppercase mt-1">RSVP</span>
+</a>
+</nav>
+<script>
+    // Reveal Animations with IntersectionObserver
+    const observerOptions = { threshold: 0.1 };
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Parallax Effect
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        // Scroll Progress
+        const winHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolledPercentage = (scrolled / winHeight) * 100;
+        const scrollProgress = document.getElementById('scroll-progress');
+        if (scrollProgress) scrollProgress.style.width = scrolledPercentage + "%";
+
+        // Parallax backgrounds
+        document.querySelectorAll('.parallax-bg').forEach(bg => {
+            const speed = 0.4;
+            const offset = (bg.parentElement.offsetTop - scrolled) * speed;
+            bg.style.transform = `translateY(${offset}px)`;
+        });
+    });
+
+    // Particle System (Petals & Fireflies)
+    const particleContainer = document.getElementById('particles-container');
+    
+    function createParticle(type) {
+        const particle = document.createElement('div');
+        particle.className = type;
+        
+        const size = type === 'petal' ? Math.random() * 12 + 6 : 3;
+        const startX = Math.random() * window.innerWidth;
+        const duration = Math.random() * 15 + 10;
+        const delay = Math.random() * 5;
+        
+        particle.style.left = `${startX}px`;
+        particle.style.top = `-20px`;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${type === 'petal' ? size * 0.8 : size}px`;
+        particle.style.opacity = Math.random() * 0.5 + 0.3;
+        
+        particleContainer.appendChild(particle);
+
+        particle.animate([
+            { transform: `translate(0, 0) rotate(0deg)`, opacity: particle.style.opacity },
+            { transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight + 50}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+        ], {
+            duration: duration * 1000,
+            delay: delay * 1000,
+            easing: 'linear'
+        }).onfinish = () => {
+            particle.remove();
+            createParticle(type);
+        };
+    }
+
+    // Initialize particles
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        for (let i = 0; i < 15; i++) createParticle('petal');
+        for (let i = 0; i < 20; i++) createParticle('firefly');
+    }
+
+    // Smooth Scroll for side nav
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+</script>
+</body></html>
